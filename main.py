@@ -18,13 +18,13 @@ print("Number of devices connected: " + str(NUMBER_OF_DEVICES))
 
 if(NUMBER_OF_DEVICES == 1):
     ip_command = os.popen('adb shell ip rout').read()  # get ip route
-    ip = ip_command.split(' ')[-1]
+    ip = ip_command.split(' ')[8]
     # start tcpip server on 5555
     tcpip_command = os.popen("adb tcpip 5555").read()
-    print("TCPIP DONE SUCCESSFULLY : " + tcpip_command)
     connect_command = os.popen(
         "adb connect " + ip + ":5555").read()  # connect to device
-    print("CONNECT DONE SUCCESSFULLY : " + connect_command)
+    print(tcpip_command)
+    print(connect_command)
     time.sleep(2)
     exit()
 
@@ -35,7 +35,7 @@ for index, device in enumerate(DEVICE_NAMES):
     state_command = os.popen('adb -s ' + device + ' get-state').read()
     DEVICES_STATES[device] = state_command
     DEVICES_IPS[device] = os.popen(
-        'adb -s ' + device + ' shell ip rout').read().split(' ')[-1]
+        'adb -s ' + device + ' shell ip rout').read().split(' ')[8]
 print("GOT DEVICE NAMES AND IPS\n\n")
 
 print("Multiple devices connected, Please choose one of the following devices: ")
@@ -46,7 +46,6 @@ for index, device in enumerate(DEVICE_NAMES):
 device_index = ask_for_input(DEVICE_NAMES=DEVICE_NAMES)
 device = DEVICE_NAMES[device_index - 1]
 ip = DEVICES_IPS[device]
-# start tcpip server on 5555
 print(os.popen("adb -s " + device + " tcpip 5555").read())
 print(os.popen("adb -s " + device + " connect " +
       ip + ":5555").read())  # connect to device
