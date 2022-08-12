@@ -8,7 +8,7 @@ DEVICES_IPS = dict()
 
 disconnect()
 adb_devices_cmd = os.popen('adb devices').read()
-if not check_device_connected(adb_devices_cmd):
+if check_device_connected(adb_devices_cmd) == False:
     print("No Device found please connect you device with USB and enable USB Debugging from settings")
     time.sleep(2)
     exit()

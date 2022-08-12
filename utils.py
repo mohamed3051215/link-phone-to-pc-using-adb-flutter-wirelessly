@@ -1,9 +1,9 @@
 import os
 
 
-def check_device_connected(command):
+def check_device_connected(command: str):
 
-    if "List of devices attached" == command:
+    if "List of devices attached" == command.strip():
         return False
     else:
         return True
